@@ -37,7 +37,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractUser):
+class User(AbstractUser):
     username = None
     email = models.EmailField(verbose_name='email address',
                               max_length=255,
@@ -48,12 +48,8 @@ class CustomUser(AbstractUser):
     phone_number = PhoneNumberField(blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    department = models.ForeignKey(
-        "department.Department",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
+    is_employee = models.BooleanField(default=False)
+    is_customer = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
 
@@ -67,6 +63,32 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.email}, Admin: {self.is_staff}"
 
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='customer')
+    is_vip = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['user__last_name', 'user__first_name']
+    def __str__(self):
+        return f"{self.user.first_name}, Admin: {self.user.last_name}"
+
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='employee')
+    department = models.ForeignKey(
+        "department.Department",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        ordering = ['user__last_name', 'user__first_name']
+
+    def __str__(self):
+        return f"{self.user.first_name}, Admin: {self.user.last_name}"
 
 # class Record(models.Model):
 #
