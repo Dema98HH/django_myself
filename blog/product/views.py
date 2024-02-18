@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 
 def home(request):
-    return render(request, 'department/index.html')
+    return render(request, 'product/index.html')

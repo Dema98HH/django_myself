@@ -6,4 +6,4 @@ class Department(models.Model):
 
 
     def __str__ (self):
-        return f"Department name: {self.department_name}"
+        return f"Department: {self.department_name}"

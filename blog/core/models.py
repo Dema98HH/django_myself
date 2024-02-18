@@ -61,7 +61,7 @@ class User(AbstractUser):
         ordering = ['last_name', 'first_name']
 
     def __str__(self):
-        return f"{self.email}, Admin: {self.is_staff}"
+        return f"{self.email}, Employee: {self.is_employee}, Customer: {self.is_customer}"
 
 
 
@@ -72,7 +72,7 @@ class Customer(models.Model):
     class Meta:
         ordering = ['user__last_name', 'user__first_name']
     def __str__(self):
-        return f"{self.user.first_name}, Admin: {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
 
 
 class Employee(models.Model):
@@ -88,7 +88,7 @@ class Employee(models.Model):
         ordering = ['user__last_name', 'user__first_name']
 
     def __str__(self):
-        return f"{self.user.first_name}, Admin: {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
 
 # class Record(models.Model):
 #
