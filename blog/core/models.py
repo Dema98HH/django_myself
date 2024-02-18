@@ -36,6 +36,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("Superuser must have is_superuser=True."))
         return self.create_user(email, password, **extra_fields)
 
+
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(verbose_name='email address',
@@ -64,7 +65,7 @@ class CustomUser(AbstractUser):
         ordering = ['last_name', 'first_name']
 
     def __str__(self):
-        return f"{self.last_name}, Admin: {self.is_admin}"
+        return f"{self.email}, Admin: {self.is_staff}"
 
 
 # class Record(models.Model):
